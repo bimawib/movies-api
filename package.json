@@ -1,18 +1,25 @@
 {
-  "name": "movies-crud",
+  "name": "movies-api",
   "version": "1.0.0",
-  "description": "CRUD for movies, and auth with JWT",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon app.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bimawib/movies-api.git"
+  },
+  "author": "bima",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bimawib/movies-api/issues"
+  },
+  "homepage": "https://github.com/bimawib/movies-api#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "debug": "^4.3.4",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "fastest-validator": "^1.17.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "pg": "^8.10.0",

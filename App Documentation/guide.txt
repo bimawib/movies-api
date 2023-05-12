@@ -1,0 +1,6 @@
+setting db credential at .env
+
+npm install
+
+running app : npm run dev
+
