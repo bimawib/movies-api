@@ -1,6 +1,17 @@
-setting db credential at .env
+setting db credential at .env (create one)
+
+set the field to db credentials
+DB_USERNAME = 
+DB_PASSWORD = 
+DB_HOSTNAME = 
+DB_NAME = 
+DB_DIALECT = 
+DB_PORT = 
 
 npm install
 
-running app : npm run dev
+run this in psql movies database:
 
+SELECT setval('movies_id_seq', (SELECT MAX(id) FROM movies));
+
+running app : npm run dev

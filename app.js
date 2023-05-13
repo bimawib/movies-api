@@ -39,8 +39,8 @@ app.use(
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
-app.use('/movies', movieRouter);
-app.use('/users', userRouter);
+app.use('/api/movies', movieRouter);
+app.use('/api/users', userRouter);
 
 app.listen(3000, function(){
     console.log('server running in port 3000');

@@ -1,7 +1,11 @@
 var express = require('express');
-var router = express.Router();
+var route = express.Router();
 var MoviesController = require('../controllers/MoviesController');
 
-router.get('/', MoviesController.get);
+route.get('/', MoviesController.get);
+route.get('/:id', MoviesController.getById);
+route.post('/', MoviesController.create);
+route.put('/:id', MoviesController.update);
+route.delete('/:id', MoviesController.delete);
 
-module.exports = router;
+module.exports = route;
