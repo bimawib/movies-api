@@ -1,21 +1,25 @@
 {
   "name": "movies-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "for bootcamp purposes",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "author": "bima",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "fastest-validator": "^1.17.0",
+    "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.31.1",
     "sequelize-cli": "^6.6.0",
     "swagger-jsdoc": "^6.2.8",

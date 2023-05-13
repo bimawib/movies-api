@@ -7,11 +7,10 @@ DB_HOSTNAME =
 DB_NAME = 
 DB_DIALECT = 
 DB_PORT = 
+SECRET_KEY = bootcampexpress
 
+RUN : 
 npm install
-
-run this in psql movies database:
-
-SELECT setval('movies_id_seq', (SELECT MAX(id) FROM movies));
+npx sequelize-cli db:migrate
 
 running app : npm run dev
