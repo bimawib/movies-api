@@ -1,6 +1,6 @@
 let client;
 const Validator = require('fastest-validator');
-const {Movies} = require('../models');
+const { Movies } = require('../models');
 const validationChecker = new Validator();
 
 const MoviesController = {
@@ -100,6 +100,7 @@ const MoviesController = {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     },
+    
     async delete(req, res) {
         const { id } = req.params;
       

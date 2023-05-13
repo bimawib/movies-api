@@ -28,11 +28,11 @@ const authenticate = async(req, res, next) => {
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
             return res.status(401).json({ message: 'Invalid token' });
-    }
+        }
 
-    req.user = decoded; // Attach the decoded user information to the request object
-    next();
-  });
+        req.user = decoded; // Attach the decoded user information to the request object
+        next();
+    });
 }
 
 module.exports = { saveUser, authenticate };
