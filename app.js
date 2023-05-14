@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerJson = require('./swagger.json');
 
 const client  = require('./db');
 
@@ -16,29 +17,12 @@ const authRouter = require('./routes/auth');
 
 const app = express();
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'EXPRESS API WITH SWAGGER',
-            version: '1.0.0',
-            description: 'Simple CRUD App for DVD Rental'
-        },
-        servers: [
-            {
-                url: 'http://localhost:3000'
-            }
-        ]
-    },
-    apis: ['./routes/*.js'],
-}
-const specs = swaggerJsdoc(options);
-
 app.use(
     '/api-docs',
     swaggerUi.serve,
-    swaggerUi.setup(specs, {explorer: true})
+    swaggerUi.setup(swaggerJson)
 );
+
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());

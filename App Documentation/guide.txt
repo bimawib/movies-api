@@ -1,6 +1,6 @@
-setting db credential at .env (create one)
+Setting db credential at .env (create one)
 
-set the field to db credentials
+Set the env to match db credentials
 DB_USERNAME = 
 DB_PASSWORD = 
 DB_HOSTNAME = 
@@ -12,5 +12,33 @@ SECRET_KEY = bootcampexpress
 RUN : 
 npm install
 npx sequelize-cli db:migrate
+npm run dev
 
-running app : npm run dev
+SWAGGER DOCS :
+localhost:3000/api-docs
+(jangan lupa kasih bearer token dari path /auth/login atau /auth/signup)
+
+Example Format Update/Create Movies:
+{
+    "title": "SERIBU DINOSAURUS",
+    "genres": "horror",
+    "year": "2013"
+}
+Example Format Signup:
+{
+    "email": "mcrxgg@gmail.com",
+    "gender": "Male",
+    "role": "Full Stack Developer",
+    "password": "12345678"
+}
+Example Format Login:
+{
+    "email": "mcrxgg@gmail.com",
+    "password": "12345678"
+}
+Example Format Update User:
+{
+    "email": "mcrxgg@gmail.com",
+    "gender": "Male",
+    "role": "Back End Developer"
+}
