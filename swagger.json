@@ -43,7 +43,22 @@
                 "summary" : "Get all the users",
                 "description": "Get all the users",
                 "produces": ["application/json"],
-                "parameters": [],
+                "parameters": [
+                    {
+                      "name": "page",
+                      "in": "query",
+                      "description": "Page number",
+                      "required": false,
+                      "type": "integer"
+                    },
+                    {
+                      "name": "limit",
+                      "in": "query",
+                      "description": "Number of items per page",
+                      "required": false,
+                      "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -164,7 +179,22 @@
                 "summary" : "Get all the movies",
                 "description": "Get all the movies",
                 "produces": ["application/json"],
-                "parameters": [],
+                "parameters": [
+                    {
+                      "name": "page",
+                      "in": "query",
+                      "description": "Page number",
+                      "required": false,
+                      "type": "integer"
+                    },
+                    {
+                      "name": "limit",
+                      "in": "query",
+                      "description": "Number of items per page",
+                      "required": false,
+                      "type": "integer"
+                    }
+                  ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
