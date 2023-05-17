@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         role: {
             type: DataTypes.STRING
         },
+        avatar: {
+            type: DataTypes.STRING
+        },
     }, {
         tableName: "users",
         timestamps: false

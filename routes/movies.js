@@ -1,7 +1,7 @@
 var express = require('express');
 var route = express.Router();
 var MoviesController = require('../controllers/MoviesController');
-const AuthMiddleware = require('../middleware/auth');
+const AuthMiddleware = require('../middleware/AuthMiddleware');
 
 route.get('/', AuthMiddleware.authenticate, MoviesController.get);
 route.get('/:id', AuthMiddleware.authenticate, MoviesController.getById);

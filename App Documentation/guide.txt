@@ -1,6 +1,7 @@
 Setting db credential at .env (create one)
 
 Set the env to match db credentials
+APP_HOSTNAME = http://localhost:3000/
 DB_USERNAME = 
 DB_PASSWORD = 
 DB_HOSTNAME = 

@@ -52,7 +52,10 @@ const AuthControllers = {
                 const passwordCheck = await bcrypt.compare(password, user.password);
 
                 if(passwordCheck) {
-                    let token = jwt.sign({ id: user.id }, SECRET_KEY, {
+                    let token = jwt.sign({ 
+                        id: user.id, 
+                        role: user.role 
+                    }, SECRET_KEY, {
                     expiresIn: 1 * 24 * 60 * 60 * 1000,
                     });
             

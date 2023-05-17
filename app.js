@@ -8,9 +8,9 @@ const swaggerJson = require('./swagger.json');
 
 const client  = require('./db');
 
-const MoviesController = require('./controllers/MoviesController');
-const UsersController = require('./controllers/UsersController');
-const AuthControllers = require('./controllers/AuthController');
+const moviesController = require('./controllers/MoviesController');
+const usersController = require('./controllers/UsersController');
+const authController = require('./controllers/AuthController');
 const movieRouter = require('./routes/movies');
 const userRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
@@ -47,6 +47,6 @@ client.connect(function(err){
     }
 });
 
-MoviesController.setClient(client);
-UsersController.setClient(client);
-AuthControllers.setClient(client);
+moviesController.setClient(client);
+usersController.setClient(client);
+authController.setClient(client);

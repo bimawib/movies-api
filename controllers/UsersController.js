@@ -1,4 +1,7 @@
 let client;
+const fs = require('fs');
+const path = require('path');
+const APP_HOSTNAME = process.env.APP_HOSTNAME;
 const { Users } = require('../models');
 const Validator = require('fastest-validator');
 const validationChecker = new Validator();
@@ -56,7 +59,21 @@ const UsersController = {
 
     async update(req, res, next){
         const userId = req.params.id;
+        const authenticatedUserId = req.user.id;
+
+        const absoluteFilePath = req.file.path;
+        const relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
+        const fileLink = relativeFilePath.replace(/\\/g, '/');
+
+        console.log(fileLink);
+
+        if(parseInt(userId, 10) !== authenticatedUserId){
+            fs.unlinkSync(absoluteFilePath);
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
         const validate = validationChecker.validate(req.body, userValidation);
+
         if(validate.length){
             return res.status(400).json(validate);
         }
@@ -71,7 +88,8 @@ const UsersController = {
             const updateUser = await Users.update({
                 email,
                 gender,
-                role
+                role,
+                avatar: APP_HOSTNAME + fileLink
             }, {
                 where: {id: userId}
             });
