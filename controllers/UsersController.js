@@ -61,11 +61,15 @@ const UsersController = {
         const userId = req.params.id;
         const authenticatedUserId = req.user.id;
 
-        const absoluteFilePath = req.file.path;
-        const relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
-        const fileLink = relativeFilePath.replace(/\\/g, '/');
+        let absoluteFilePath = req.file;
+        let relativeFilePath;
+        let fileLink;
 
-        console.log(fileLink);
+        if(absoluteFilePath !== undefined){
+            absoluteFilePath = req.file.path;
+            relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
+            fileLink = relativeFilePath.replace(/\\/g, '/');
+        }
 
         if(parseInt(userId, 10) !== authenticatedUserId){
             fs.unlinkSync(absoluteFilePath);
@@ -78,21 +82,15 @@ const UsersController = {
             return res.status(400).json(validate);
         }
 
-        const {
-            email,
-            gender,
-            role
-        } = req.body;
+        const updateValues =  {
+            email: req.body.email,
+            gender: req.body.gender,
+            role: req.body.role,
+            ...(fileLink !== undefined && { avatar: APP_HOSTNAME + fileLink })
+        }
 
         try {
-            const updateUser = await Users.update({
-                email,
-                gender,
-                role,
-                avatar: APP_HOSTNAME + fileLink
-            }, {
-                where: {id: userId}
-            });
+            const updateUser = await Users.update(updateValues, {where: {id: userId}});
 
             const updatedUser = await Users.findByPk(userId);
             res.json(updatedUser);
