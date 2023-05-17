@@ -13,6 +13,17 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileUpload = multer({storage});
+const fileFilter = (req, file, cb) => {
+    // Check if the file is an image
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true); // Accept the file
+    } else {
+        const error = new Error('Only image files are allowed.');
+        error.status = 406;
+        cb(error, false); // Reject the file
+    }
+};
+
+const fileUpload = multer({storage: storage, fileFilter: fileFilter});
 
 module.exports = fileUpload;
