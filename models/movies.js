@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         year: {
             type: DataTypes.STRING
         },
+        picture_link: {
+            type: DataTypes.STRING
+        }
     },
     {
         tableName: "movies",

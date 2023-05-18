@@ -61,6 +61,7 @@ const UsersController = {
         const userId = req.params.id;
         const authenticatedUserId = req.user.id;
 
+        // IMAGE UPLOAD
         let absoluteFilePath = req.file;
         let relativeFilePath;
         let fileLink;

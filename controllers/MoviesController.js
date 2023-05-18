@@ -1,7 +1,9 @@
 let client;
-const Validator = require('fastest-validator');
+const path = require('path');
 const { Movies } = require('../models');
+const Validator = require('fastest-validator');
 const validationChecker = new Validator();
+const APP_HOSTNAME = process.env.APP_HOSTNAME;
 
 const MoviesController = {
     setClient(dbClient) {
@@ -73,23 +75,31 @@ const MoviesController = {
 
     async update(req, res, next){
         const movieId = req.params.id;
+
+        let absoluteFilePath = req.file;
+        let relativeFilePath;
+        let fileLink;
+
+        if(absoluteFilePath !== undefined){
+            absoluteFilePath = req.file.path;
+            relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
+            fileLink = relativeFilePath.replace(/\\/g, '/');
+        }
+
         const validate = validationChecker.validate(req.body, movieValidation);
         if(validate.length){
             return res.status(400).json(validate);
         }
 
-        const {
-            title,
-            genres,
-            year
-        } = req.body;
+        const fieldValue =  {
+            title: req.body.title,
+            genres: req.body.genres,
+            year: req.body.year,
+            ...(fileLink !== undefined && { picture_link: APP_HOSTNAME + fileLink })
+        };
 
         try {
-            const updatedMovies = await Movies.update({
-                title,
-                genres,
-                year
-            }, {
+            const updatedMovies = await Movies.update(fieldValue, {
                 where: {id: movieId}
             });
 
