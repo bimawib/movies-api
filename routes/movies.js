@@ -6,7 +6,7 @@ const fileUpload = require('../middleware/MulterMiddleware');
 
 route.get('/', AuthMiddleware.authenticate, MoviesController.get);
 route.get('/:id', AuthMiddleware.authenticate, MoviesController.getById);
-route.post('/', AuthMiddleware.authenticate, MoviesController.create);
+route.post('/', AuthMiddleware.authenticate, fileUpload.single('picture_link'), MoviesController.create);
 route.put('/:id', AuthMiddleware.authenticate, fileUpload.single('picture_link'), MoviesController.update);
 route.delete('/:id', AuthMiddleware.authenticate, MoviesController.delete);
 

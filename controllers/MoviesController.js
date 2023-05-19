@@ -47,25 +47,33 @@ const MoviesController = {
     },
 
     async create(req, res, next){
+        const movieId = req.params.id;
+
+        let absoluteFilePath = req.file;
+        let relativeFilePath;
+        let fileLink;
+
+        if(absoluteFilePath !== undefined){
+            absoluteFilePath = req.file.path;
+            relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
+            fileLink = relativeFilePath.replace(/\\/g, '/');
+        }
+
         const validate = validationChecker.validate(req.body, movieValidation);
         if(validate.length){
             return res.status(400).json(validate);
         }
 
-        const {
-            title,
-            genres,
-            year
-        } = req.body;
+        const fieldValue =  {
+            title: req.body.title,
+            genres: req.body.genres,
+            year: req.body.year,
+            ...(fileLink !== undefined && { picture_link: APP_HOSTNAME + fileLink })
+        };
 
         try {
-            const createdMovies = await Movies.create({
-                title,
-                genres,
-                year
-            });
+            const createdMovies = await Movies.create(fieldValue);
 
-            // const createdMovies = result.rows[0];
             res.status(201).json({data: createdMovies});
         } catch (error){
             console.error(error);
