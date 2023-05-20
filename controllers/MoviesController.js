@@ -2,9 +2,6 @@ const MovieService = require('../services/MovieService');
 const { Movies } = require('../models');
 
 const MoviesController = {
-    setClient(dbClient) {
-        client = dbClient;
-    },
 
     async get(req, res, next){
         try{

@@ -53,7 +53,6 @@ client.connect(function(err){
     }
 });
 
-moviesController.setClient(client);
 usersController.setClient(client);
 authController.setClient(client);
 movieRepository.setClient(client);

@@ -24,6 +24,7 @@ Example Format Update/Create Movies:
     "title": "SERIBU DINOSAURUS",
     "genres": "horror",
     "year": "2013"
+    "picture_link": FILE GAMBAR
 }
 Example Format Signup:
 {
@@ -42,4 +43,5 @@ Example Format Update User:
     "email": "mcrxgg@gmail.com",
     "gender": "Male",
     "role": "Back End Developer"
+    "avatar": FILE GAMBAR
 }
