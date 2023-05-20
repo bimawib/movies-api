@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const client  = require('./db');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const path = require('path');
@@ -7,8 +8,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJson = require('./swagger.json');
 
-const client  = require('./db');
-
+const movieRepository = require('./repository/MovieRepository');
 const moviesController = require('./controllers/MoviesController');
 const usersController = require('./controllers/UsersController');
 const authController = require('./controllers/AuthController');
@@ -56,3 +56,4 @@ client.connect(function(err){
 moviesController.setClient(client);
 usersController.setClient(client);
 authController.setClient(client);
+movieRepository.setClient(client);
