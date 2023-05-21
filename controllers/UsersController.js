@@ -20,7 +20,6 @@ const UsersController = {
 
             res.json({data: users});
         } catch(error) {
-            console.error(error);
             res.status(500).json({
                 error: error.message
             });
@@ -37,7 +36,6 @@ const UsersController = {
             }
             return res.json({data: user});
         } catch(error) {
-            console.error(error);
             return res.status(500).json({
                 error: error.message
             });
@@ -60,7 +58,6 @@ const UsersController = {
             const updatedUser = await UserService.updateUser(id, field);
             res.json({data: updatedUser});
         } catch (error){
-            console.error(error);
             res.status(500).json({
                 error: error.message
             });
@@ -79,7 +76,6 @@ const UsersController = {
 
             return res.json({ message: 'User deleted successfully' });
         } catch (error) {
-            console.error(error);
             return res.status(500).json({
                 error: error.message
             });

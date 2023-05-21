@@ -127,9 +127,8 @@ const UserService = {
 
     async deleteUser(id, role){
         try {
-            console.log(role);
             if(!role || role !== "Administrator"){
-                return false;
+                throw new Error("Unauthorized user cannot delete this data!");
             }
 
             const userInfo = await UserRepository.getUsersById(id);
