@@ -29,9 +29,8 @@ const AuthControllers = {
                 // console.log("user", JSON.stringify(user, null, 2));
                 // console.log(token);
                 return res.status(201).send(user);
-            } else {
-                return res.status(409).send("Login credentials are not correct");
             }
+            return res.status(409).send("Fail to sign up");
         } catch (error) {
             console.log(error);
         }

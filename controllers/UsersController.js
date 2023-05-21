@@ -1,17 +1,7 @@
-let client;
-const fs = require('fs');
-const path = require('path');
-const APP_HOSTNAME = process.env.APP_HOSTNAME;
-const { Users } = require('../models');
-const Validator = require('fastest-validator');
 const UserService = require('../services/UserService');
-const validationChecker = new Validator();
+const { Users } = require('../models');
 
 const UsersController = {
-    setClient(dbClient) {
-        client = dbClient;
-    },
-
     async get(req, res, next){
         try{
             const { page, limit } = req.query;

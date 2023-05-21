@@ -66,7 +66,6 @@ const UserService = {
                 file
             } = field;
 
-            console.log(file)
             let absoluteFilePath = file;
             let relativeFilePath;
             let fileLink;
