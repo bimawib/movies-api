@@ -73,26 +73,4 @@ const UsersController = {
     },
 }
 
-const userValidation = {
-    email: {
-        type: "email",
-        min: 1,
-        max: 255,
-        optional: false
-    },
-    gender: {
-        type: "enum",
-        values: ['Male', 'Female'],
-        min: 1,
-        max: 50,
-        optional: false
-    },
-    role: {
-        type: "string",
-        min: 1,
-        max: 50,
-        optional: false
-    },
-}
-
 module.exports = UsersController;
