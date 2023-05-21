@@ -23,7 +23,7 @@ const MovieRepository = {
     },
 
     async updateMovie(id, field){
-        const updatedMovies = await Movies.update(field, {
+        const updateMovie = await Movies.update(field, {
             where: {id: id}
         });
         const updatedMovie = await Movies.findByPk(id);

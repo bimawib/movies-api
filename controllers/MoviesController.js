@@ -7,7 +7,7 @@ const MoviesController = {
         try{
             const { page, limit } = req.query;
             const movies = await MovieService.getMoviesIndex(page, limit);
-            res.status(200).json(movies);
+            res.status(200).json({data: movies});
         } catch(error) {
             res.status(500).json({
                 error: error.message
@@ -25,7 +25,7 @@ const MoviesController = {
                     error: 'Movie not found'
                 });
             }
-            return res.json(movie);
+            return res.json({data: movie});
         } catch (error) {
             return res.status(500).json({
                 error: error.message
@@ -66,7 +66,7 @@ const MoviesController = {
             };
 
             const updatedMovie = await MovieService.updateMovie(movieId, field);
-            res.json(updatedMovie);
+            res.json({data: updatedMovie});
         } catch (error){
             res.status(500).json({
                 error: error.message

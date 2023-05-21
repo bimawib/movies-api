@@ -29,7 +29,6 @@ const MovieService = {
     async getMovieById(id) {
         try {
             const movie = await MovieRepository.getMovieById(id);
-
             return movie;
         } catch(err) {
             throw new Error('Failed to fetch movie');
@@ -65,8 +64,10 @@ const MovieService = {
             );
 
             if(validate.length){
-                fs.unlinkSync(absoluteFilePath);
-                throw new Error(validate[0].message);
+                if(absoluteFilePath !== undefined){
+                    fs.unlinkSync(absoluteFilePath);
+                }
+                throw new Error(validate[0].message || "Failed to create movie");
             }
 
             const fieldValue = {
@@ -79,7 +80,7 @@ const MovieService = {
             const createdMovie = await MovieRepository.createMovie(fieldValue);
             return createdMovie;
         } catch(err) {
-            throw new Error('Failed to create movie');
+            throw new Error(err);
         }
     },
 
@@ -114,8 +115,10 @@ const MovieService = {
             const movie = await MovieRepository.getMovieById(id);
             
             if(validate.length || !movie){
-                fs.unlinkSync(absoluteFilePath);
-                throw new Error('Failed to update movie');
+                if(absoluteFilePath !== undefined){
+                    fs.unlinkSync(absoluteFilePath);
+                }
+                throw new Error(validate[0].message || "Failed to update movie");
             }
 
             if(movie.picture_link && fileLink !== undefined){

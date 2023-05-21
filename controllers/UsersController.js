@@ -4,6 +4,7 @@ const path = require('path');
 const APP_HOSTNAME = process.env.APP_HOSTNAME;
 const { Users } = require('../models');
 const Validator = require('fastest-validator');
+const UserService = require('../services/UserService');
 const validationChecker = new Validator();
 
 const UsersController = {
@@ -13,114 +14,75 @@ const UsersController = {
 
     async get(req, res, next){
         try{
-            const page = parseInt(req.query.page) || 1;
-            let limit = parseInt(req.query.limit) || 10;
-            const offset = (page - 1) * limit;
+            const { page, limit } = req.query;
 
-            // Validate and limit the maximum value of 'limit' if needed
-            if (limit > 100) {
-                limit = 100; // Set a maximum limit of 100
-            }
+            const users = await UserService.getUsersIndex(page, limit);
 
-            const result = await client.query('SELECT * FROM users OFFSET $1 LIMIT $2', [offset, limit]);
-
-            const getUsers = result.rows.map(row => ({
-                id: row.id,
-                email: row.email,
-                gender: row.gender,
-                role: row.role
-            }));
-
-            res.json({data: getUsers});
+            res.json({data: users});
         } catch(error) {
             console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({
+                error: error.message
+            });
         }
     },
 
     async getById(req, res, next){
         try {
             const { id } = req.params;
-            const user = await Users.findByPk(id);
+            const user = await UserService.getUsersById(id);
+
             if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+                return res.status(404).json({ error: 'User not found' });
             }
-            return res.json({
-                id: user.id,
-                email: user.email,
-                gender: user.gender,
-                role: user.role,
-            });
+            return res.json({data: user});
         } catch(error) {
             console.error(error);
-            return res.status(500).json({ error: 'Server error' });
+            return res.status(500).json({
+                error: error.message
+            });
         }
     },
 
     async update(req, res, next){
-        const userId = req.params.id;
-        const authenticatedUserId = req.user.id;
-
-        // IMAGE UPLOAD
-        let absoluteFilePath = req.file;
-        let relativeFilePath;
-        let fileLink;
-
-        if(absoluteFilePath !== undefined){
-            absoluteFilePath = req.file.path;
-            relativeFilePath = path.relative(process.cwd(), absoluteFilePath);
-            fileLink = relativeFilePath.replace(/\\/g, '/');
-        }
-
-        if(parseInt(userId, 10) !== authenticatedUserId){
-            fs.unlinkSync(absoluteFilePath);
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        const validate = validationChecker.validate(req.body, userValidation);
-
-        if(validate.length){
-            return res.status(400).json(validate);
-        }
-
-        const updateValues =  {
-            email: req.body.email,
-            gender: req.body.gender,
-            role: req.body.role,
-            ...(fileLink !== undefined && { avatar: APP_HOSTNAME + fileLink })
-        }
-
         try {
-            const updateUser = await Users.update(updateValues, {where: {id: userId}});
+            const id = {
+                userId: req.params.id,
+                authenticatedUserId: req.user.id
+            }
+            const field = {
+                email: req.body.email,
+                gender: req.body.gender,
+                role: req.body.role,
+                file: req.file
+            }
 
-            const updatedUser = await Users.findByPk(userId);
-            res.json(updatedUser);
+            const updatedUser = await UserService.updateUser(id, field);
+            res.json({data: updatedUser});
         } catch (error){
             console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({
+                error: error.message
+            });
         }
     },
 
     async delete(req, res) {
-        const { id } = req.params;
-      
         try {
-            // Find the user by ID
-            const user = await Users.findByPk(id);
-        
-            // Check if the User exists
-            if (!user) {
-                return res.status(404).json({ error: 'User not found' });
+            const { role } = req.user;
+            const { id } = req.params;
+            const deletedUser = await UserService.deleteUser(id, role);
+
+            if (!deletedUser) {
+                return res.status(404).json({ error: 'Fail deleting user' });
             }
-        
-            // Delete the user
-            await user.destroy();
-        
-            // Return a success response
+
             return res.json({ message: 'User deleted successfully' });
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({
+                error: error.message
+            });
         }
     },
 }
