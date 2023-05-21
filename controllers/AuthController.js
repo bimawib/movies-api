@@ -1,13 +1,9 @@
-let client;
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 const { Users } = require('../models');
 const { SECRET_KEY } = process.env;
 
 const AuthControllers = {
-    setClient(dbClient) {
-        client = dbClient;
-    },
 
     async signUp(req, res){
         try {
